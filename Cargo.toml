@@ -7,3 +7,4 @@ edition = "2021"
 actix-files = "0.6.6"
 actix-web = "4.9.0"
 getrandom = {version = "0.2",features = ["js"]}
+serde = "1.0.213"

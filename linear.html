@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <script src="linear-client.js"></script>
+    <script src="/static/linear-client.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
@@ -30,26 +30,44 @@
     <!--navbar-->
     <br><br>
     <h1>Interactive Linear Regression Model</h1>
-    <pre>Please input training data formatted as: 
-        (x, y)
-        (x, y)
-        etc.
-        parentheses and spaces optional.
-    </pre>
+    <div class="articletext">
+    <h2 >Hold on-- What is linear regression?</h2>
+    <p>
+        Linear regression is a type of machine learning that finds patterns in the relationships between data. It's trained on example data, and tries to find the line of best fit by guessing values and comparing its guess 
+        to the actual answer, and then adjusting accordingly. If the pattern
+        exhibited is linear, or at least close enough, then such a model can be used to accurately predict outcomes of whatever's being tested. If the pattern isn't linear, say for example exponential,
+        it will fail to properly predict in most cases. For instance, a linear regression model can do very well at finding the pattern in a steadily rising consumer trend, but wouldn't be applicable to the rate of spread of a 
+        viral epidemic.
+    </p>
+    <h2>Okay, how do I use this model?</h2>
+    <p>Great question, hypothetical reader! I created a simple user interface for the model below. To use it, you'll type some comma separated numbers (like this: 5, 10) into the text field below. Spaces and parentheses
+        are totally optional and will be ignored by the program. Decimals and negatives are also allowed. Just put each pair of values on a new line, and add at least 2 pairs.
+    </p>
+    <p> The placeholder text has an example: here, 
+        the pattern is that the right number is double the left number. Once you've added
+        your data, train the model! It'll take a fraction of a second, but in that time the model will have studied your data ~8 million times and learned from it. Then, just type any number in the box below that one, and hit "Predict it!"
+         The model will try to predict what would be on the right if that number was on the left. It'll also tell you the equation of its line of best fit. 
+    </p>
+
+    <br><br>
+
     <form action="javascript:submit()">
-        <textarea name="data" id="data" rows="30" cols="30"></textarea>
-        <input type="submit" value="Train Model">
+        <textarea name="data" id="data" rows="15" cols="30" placeholder="1, 2&#10;3, 6&#10;5, 10&#10;50, 100"></textarea>
+        <input type="submit" value="Train the model!">
     </form>
 
     <br>
+    <p class="center">And then...</p>
     <br>
 
     <form action="javascript:predict()">
         <input type="text" id="input">
-        <input type="submit" value="Predict inputted value">
+        <input type="submit" value="Predict it!">
     </form>
 
-    <p id="result"></p>
+    <p class="center" id="result"></p>
+    <p class="center" id="formula"></p>
+</div>
 
 </body>
 </html>

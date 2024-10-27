@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 pub type Point = (f64, f64);
 use serde::ser::{Serialize, SerializeStruct};
 
@@ -88,7 +90,7 @@ impl LinearRegressionModel {
 
     pub fn train(&mut self) {
         let mut tr = TrainingResult::new();
-        let learn_rate: f64 = 0.000001;
+        let learn_rate: f64 = 0.000064;
 
         for i in 0..(self.graph.len() - 1) * self.epochs {
             let prediction = tr.intercept + tr.slope * self.graph[i % self.graph.len()].0;
