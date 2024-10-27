@@ -1,4 +1,4 @@
 /target
-/static
+/static/*
 !/static/*.js
 !/static/*.css
