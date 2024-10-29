@@ -53,7 +53,7 @@ figcaption{
     opacity: 80%;
     display: block;
     text-align: center;
-    font-size: 0.9em;
+    font-size: 1.05em;
 }
 
 h1{
@@ -87,6 +87,22 @@ h2{
     width: 15vw;
 }
 
+
+@media only screen and (max-width: 1600px) {
+    .sidebyside{
+        display: block !important;
+        align-items: center;
+    }
+    .sidebyside figure img{
+        width: 100vw !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: -25vw !important;
+        margin-top: -15vw;
+        align-self: center !important;
+    }
+}
 @media only screen and (max-width: 1200px) {
     .centerimage{
         width: auto !important;
@@ -98,6 +114,7 @@ h2{
         width: auto !important;
         height: 45vh !important;
     }
+
 
 }
 
@@ -191,4 +208,20 @@ form * {
 input[type="text"]{
     text-align: center;
     width: 7em;
+}
+
+.sidebyside{
+    display: flex;
+    float: left;
+    gap: -5vw;
+    margin-left: -15vw !important;
+    margin-right: 20vw;
+    margin-top: -8vw;
+}
+.sidebyside figure img{
+    width: 36vw;
+    margin-right: -11vw;
+    margin-left: -11vw;
+    margin-bottom: -8.5vw;
+    clip-path: rect(25% 75% 75% 25%);
 }

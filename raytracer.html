@@ -44,12 +44,18 @@
             <img src="static/raytracer/kachow.jpg" class="articleimage"/>
             <figcaption>Raytraced lighting in <cite>Cars (2006)</cite> gives the body of the protagonist a polished, glossy feel.</figcaption>
         </figure>
+        
         <br/>
         <h2>Features</h2>
         <p>
+            I created this raytracer entirely from scratch, meaning I didn't use any libraries to create it, only my own code. This was quite a challenging project to get right, and probably the project I'm most proud of to date. 
+            The math involved is pretty complex,
+            and it took many tries to get everything to look natural and realistic. 
+        </p>
+        <p>
             The raytracer I created is pretty limited in function. To start off, it can only render spheres. The formula for a ray's collision with a sphere was complicated enough for me to implement as it is; to implement it to work with an arbitrary
-            3D model would be beyond the scope of my time or abilities. There are 2 materials a rendered sphere can be: Lambertian (a matte solid) and metallic (shiny metal that reflects and blurs). I tried implementing dielectrics (something that
-            is see through but refracts, like glass or water) but couldn't get it to look right. For any sphere, you can choose its position, radius, color, and material, as well as blur for metal spheres. The camera is pretty full-feature: you can 
+            3D model would be beyond the scope of my time or abilities. There are 2 materials a rendered sphere can have: Lambertian (a matte solid) and metallic (shiny metal that reflects and blurs). I tried implementing dielectrics (something that
+            is transparent but refracts, like glass or water) but couldn't get it to look right. For any sphere, you can choose its position, radius, color, and material, as well as blur for metal spheres. The camera is pretty full-feature: you can 
             set field of view, position, position to look at, lens aperture (which mainly affects the depth-of-field blur affect), and the distance from the lens to focus on. 
         </p>
         <p>
@@ -65,9 +71,62 @@
             <figcaption>A single red sphere rendered on an empty plane.</figcaption>
         </figure>
         <p>
-            I'm not going to go into the specific math behind the rendering; it would be outside the scope of this article. The basic method for re
+            I'm not going to go into the specific math behind the rendering; it would be outside the scope of this article. The basic method for rendering is to simulate rays of light traveling through the scene, using their points of collision
+            to realistically render the scene. This light-centric rendering makes natural shading and shadows better than many other rendering methods. This is a simple sphere rendered on a plane (which is actually just a really large sphere)
+            using the fully completed engine. I'm going to show you some other images that illustrate the different features used in the renderer, as well as a final demo image at the end.
         </p>
-        
+        <h2>Anti-aliasing</h2>
+        <div class="sidebyside">
+            <figure>
+                <img src="static/raytracer/lone-sphere-0s.png" class="articleimage">
+                <figcaption>1 sample per pixel</figcaption>
+            </figure>
+            <figure>
+                <img src="static/raytracer/lone-sphere-16s.png" class="articleimage">
+                <figcaption>16 samples per pixel</figcaption>
+            </figure>
+            <figure>
+                <img src="static/raytracer/lone-sphere-64s.png" class="articleimage">
+                <figcaption>64 samples per pixel</figcaption>
+            </figure>
+            <figure>
+                <img src="static/raytracer/lone-sphere-128s.png" class="articleimage">
+                <figcaption>128 samples per pixel</figcaption>
+            </figure>
+            <figure>
+                <img src="static/raytracer/lone-sphere-256s.png" class="articleimage">
+                <figcaption>256 samples per pixel</figcaption>
+            </figure>
+        </div>
+        <p>Anti-aliasing is a technique used commonly in graphics to smooth images and remove noise. The method to achieve both these results is to send many rays at one pixel and average the color of all the samples. 
+            Let's go deeper into why both these issues happen, and why anti-aliasing can help solve them.
+        </p>
+        <h2>Noise</h2>
+        <p>Noise can appear in rendered images, adding little dots all over it and ruining the image. The main reason this occurs is that the formulas used in raytracing are not 100% perfect. If a pixel is missed by all the rays sent, or if
+            the precise angle of the ray results in a <a href="https://0.30000000000000004.com/" target="_blank">floating point error</a>, a pixel can be incorrectly rendered. Averaging the results of many rays sent at a pixel, rather than 
+            trusting the results of a single ray, all but eliminates these anomalies. This creates a realistic looking image without noise.
+        </p>
+        <h2>Smoothing</h2>
+        <p>Another problem with rendering with only 1 sample per pixel is that curves can look jagged and pixelated. If you simply render 100% color in a pixel if a ray collides there, and 0% color if it doesn't, your image will clearly
+            show pixel boundaries. Anti-aliasing also fixes this. When you average out the colors over multiple samples, pixels that are near the edge of an object will smooth out, fading rather than abruptly stopping at the edge. This is
+            particularly important for curved objects, where pixelated edges can really detract from the realism. Here's a close-up comparison of the edges of a sphere using 1 sample per pixel vs 256 samples.
+        </p>
+        <figure>
+            <img src="static/raytracer/0s-smoothing.png" class="articleimage">
+            <figcaption>1 sample per pixel. Besides the terrible noise, note the jagged edges.</figcaption>
+        </figure>
+        <figure>
+            <img src="static/raytracer/256s-smoothing.png" class="articleimage">
+            <figcaption>256 samples per pixel. Note the lack of noise, and smoothed out edges.</figcaption>
+        </figure>
+        <h2>Trade-offs</h2>
+        <p>
+            You may be wondering, "Why not use 1000 samples, just to be safe? Or 10000?". The issue with taking multiple samples per pixel is rendering times. Raytracing programs are highly intensive to run, and even on the small scale of this
+            project can take minutes to render an image depending on the complexity of the scene, and the resolution of the image. Each additional sample per pixel adds another step that's being repeated thousands of times throughout rendering.
+            The other reason is that there are significant diminishing returns for additional samples. You may have noticed in the side-by-side of different sampling amounts that 128 and 256 samples look very similar in quality. I never deemed 
+            the miniscule gain to visual fidelity worth the 2x or 4x increase to rendering times that using 512 or 1024 samples would inflict.
+        </p>
+        <br><br>
     </div>
 
 </body>
