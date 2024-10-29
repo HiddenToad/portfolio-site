@@ -61,11 +61,13 @@
         <p>
             The other feature that I implemented for the renderer is concurrency. Concurrency, also known as multithreading, means that instead of your computer following each step of a task
             in a row, it will split up the task into multiple parts that can be handled simultaneously by different threads of the CPU. Think of it like hiring multiple workers to do different parts of a complex job, versus having one guy do it all alone.
-            This can be a game-changer for intense tasks that have a lot of repetitive steps, like rendering. Making my raytracer concurrent dropped my render times by nearly 25%. I'll go more into how I did this later in the article.
+            This can be a game-changer for intense tasks that have a lot of repetitive steps, like rendering.
+            Essentially, I divvy up the final image into chunks, and create workers called "threads" that are responsible for rendering each section simultaneously. When each thread finishes, it sends the final image to the main thread, 
+            along with its ID number. Once all the workers are done, the main thread assembles the segments in order using the ID numbers. Making my raytracer concurrent in this way dropped my render times by nearly 25%. 
         </p>
 
         <br><br>
-        <h2>Basic rendering</h2>
+        <h1>Basic rendering</h2>
         <figure>
             <img src="static/raytracer/lone-sphere-256s.png" class="articleimage">
             <figcaption>A single red sphere rendered on an empty plane.</figcaption>
@@ -75,7 +77,7 @@
             to realistically render the scene. This light-centric rendering makes natural shading and shadows better than many other rendering methods. This is a simple sphere rendered on a plane (which is actually just a really large sphere)
             using the fully completed engine. I'm going to show you some other images that illustrate the different features used in the renderer, as well as a final demo image at the end.
         </p>
-        <h2>Anti-aliasing</h2>
+        <h1>Anti-aliasing</h2>
         <div class="sidebyside">
             <figure>
                 <img src="static/raytracer/lone-sphere-0s.png" class="articleimage">
@@ -98,8 +100,8 @@
                 <figcaption>256 samples per pixel</figcaption>
             </figure>
         </div>
-        <p>Anti-aliasing is a technique used commonly in graphics to smooth images and remove noise. The method to achieve both these results is to send many rays at one pixel and average the color of all the samples. 
-            Let's go deeper into why both these issues happen, and why anti-aliasing can help solve them.
+        <p>Anti-aliasing is a technique used commonly in graphics to smooth images and remove visual noise. The method to achieve both these results is to send many rays at one pixel and average the color of all the samples. 
+            Let's go deeper into why these issues happen, and why anti-aliasing can help solve them.
         </p>
         <h2>Noise</h2>
         <p>Noise can appear in rendered images, adding little dots all over it and ruining the image. The main reason this occurs is that the formulas used in raytracing are not 100% perfect. If a pixel is missed by all the rays sent, or if
@@ -123,11 +125,51 @@
         <p>
             You may be wondering, "Why not use 1000 samples, just to be safe? Or 10000?". The issue with taking multiple samples per pixel is rendering times. Raytracing programs are highly intensive to run, and even on the small scale of this
             project can take minutes to render an image depending on the complexity of the scene, and the resolution of the image. Each additional sample per pixel adds another step that's being repeated thousands of times throughout rendering.
-            The other reason is that there are significant diminishing returns for additional samples. You may have noticed in the side-by-side of different sampling amounts that 128 and 256 samples look very similar in quality. I never deemed 
-            the miniscule gain to visual fidelity worth the 2x or 4x increase to rendering times that using 512 or 1024 samples would inflict.
+            The other reason is that there are significant diminishing returns for additional samples. You may have noticed in the side-by-side of different sampling amounts that 128 and 256 samples look very similar in quality. 
+            The miniscule gain to visual fidelity is simply not worth the 2x or 4x increase to rendering times that using 512 or 1024 samples would inflict.
         </p>
         <br><br>
+        <h1>Reflective Surfaces</h2>
+        <p>For matte surfaces like the spheres I've been showing you, a simulated ray is reflected in a random way. If we remove the randomness, and use a formula for how the ray would bounce, we get relective surfaces! Before I go
+            too far into explaining these, let me show you an example, using a single matte sphere and a single reflective one:
+        </p>
+        <figure>
+            <img src="static/raytracer/reflective-2-nofuzz.png" class="articleimage">
+            <figcaption>A matte sphere and a reflective sphere with no fuzz.</figcaption>
+        </figure>
+        <p>Here, we see demonstrated another amazing strength of raytracing renderers: it's incredibly simple to make realistic reflections. The rays that collide with the back of the matte sphere bounce off it, hitting the reflective one, and 
+            traveling back to the camera lens! Because we're following rays of light, we get all kinds of realistic effects easily, such as the distortion that a mirrored sphere creates.
+        </p>
+        <h2>Fuzz</h1>
+        <p>Perfect reflection works great for rendering a mirror-like object. If we want to make a shiny surface that reflects imperfectly, like metal, we need to introduce fuzz. The way we do this is pretty simple: we adjust the 
+            trajectory of rays that are reflected off of the material by a small factor, kept within a certain range by a number between 0 and 1 that we supply when creating the material. No fuzz looks like a mirror, low fuzz looks like polished metal,
+            high fuzz looks like dull metal, and max fuzz is basically useless because if you completely randomize the reflectance offset, it's just matte again. You know the deal, time for some pictures:
+        </p>
+        <div class="sidebyside" style="margin-left: -5vw !important" id="fuzz">
+        <figure>
+            <img src="static/raytracer/reflective-2-nofuzz.png" class="articleimage">
+            <figcaption>The image you saw before. No fuzz looks like a mirror.</figcaption>
+        </figure>
+        <figure>
+            <img src="static/raytracer/reflective-2.png" class="articleimage">
+            <figcaption>A low amount of fuzz results in a polished metallic look.</figcaption>
+        </figure>
+        <figure>
+            <img src="static/raytracer/reflective-2-highfuzz.png" class="articleimage">
+            <figcaption>A high amount of fuzz looks like a dull metallic surface.</figcaption>
+        </figure>
+        <figure>
+            <img src="static/raytracer/reflective-2-maxfuzz.png" class="articleimage">
+            <figcaption>Maximum fuzz might as well just be matte.</figcaption>
+        </figure>
     </div>
 
+    <h1>Putting It All Together</h1>
+    <p>Lastly, I'll show you one final image, rendered with high resolution, to demonstrate the capabilities of the renderer. Here, I've placed spheres of random color and material in random positions. Try to look for what each metallic sphere is 
+        reflecting (it may be out of the shot!) and note the depth of field blurring objects that are too close to the camera. I thought it was interesting to note that having many objects in the scene makes it look much more realistic to my eyes.
+         Maybe it's the way the reflectives interact, maybe it's the shadows, or maybe there's just something less natural to our brains about those images with a single sphere alone in infinity. Regardless, here's the render:
+    </p>
+    <img class="articleimage" src="static/raytracer/full-scene.png">
+</div>
 </body>
 </html>
