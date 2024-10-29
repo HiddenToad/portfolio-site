@@ -90,6 +90,12 @@ async fn linear() -> impl Responder{
     HttpResponse::Ok().body(read_to_string("linear.html").unwrap())
 }
 
+#[get("bayes")]
+async fn bayes() -> impl Responder{
+    HttpResponse::Ok().body(read_to_string("bayes.html").unwrap())
+}
+
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
@@ -100,6 +106,7 @@ async fn main() -> std::io::Result<()> {
             .service(raytracer)
             .service(linear)
             .service(train)
+            .service(bayes)
             
             
     })

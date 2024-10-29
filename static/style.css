@@ -228,3 +228,12 @@ input[type="text"]{
     margin-bottom: -8.5vw;
     clip-path: rect(25% 75% 75% 25%);
 }
+
+.flower{
+    scale: 0.7;
+    margin-bottom: -6vw;
+    margin-top: -4vw;
+}
+#setosa{
+    margin-bottom: -4.2vw;
+}

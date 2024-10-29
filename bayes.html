@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+
+<body>
+
+    <!--navbar-->
+    <ul>
+        <li><a href="/">About Me</a></li>
+        <li><a>About This Site</a></li>
+        <li class="dropdown">
+            <a class="dropbtn">Project Articles</a>
+            <div class="dropdown-content">
+                <a href="./raytracer">Raytracer</a>
+                <a href="#">Naive Bayes Classifier</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="dropbtn">Interactive Projects</a>
+            <div class="dropdown-content">
+                <a href="./linear">Linear Regression Model</a>
+                <a>Connect 4 Bot - Video Demo</a>
+            </div>
+        </li>
+    </ul>
+    <!--navbar-->
+
+    <h1>Building a Naive Bayes Classifier From Scratch</h1>
+    <figcaption><a target="_blank" href="https://github.com/HiddenToad/naive-bayes-rs" style="font-size: 1.2em !important;">Github Repo Link</a></figcaption>
+    <br><br>
+    <div class="articletext">
+        <h2>Okay, what's a classifier?</h2>
+        <p>A classifier is a type of machine learning model that learns how to put data into categories. As you might imagine, this has a wide range of uses. Given a person's income and age, are they more likely to buy a Mac or a PC? 
+            Given this audio file of someone speaking, by the peaks, troughs, and average pitch, are they angry or happy? Given this insect's leg length, antenna length, color, and highest pitched noise, which of these 8 species is it? Many fields
+            have a need for categorization.
+        </p>
+        <h2>Okayyyy... What's "Bayes"?</h2>
+        <p>Well, in a literal sense, Thomas Bayes was a mathematician who did a lot of work in the field of probability. Specifically, Bayesian probability works in the realm of prior experience: based on what we've seen of A, how likely is B?
+            Bayes classifiers use Bayesian probability to try to hypothesize how likely data is to fit into different categories based on their previous knowledge (training data). Bayesian classifiers are surprisingly effective for their simplicity,
+            and although they can be outstripped by more complex approaches, they outperform other models when there's little data to go off of. Bayesian models can find patterns very quickly and efficiently.
+        </p>
+        <h2>Sounds pretty cool... then why "naive"?</h2>
+        <p>Yeah, that's the downside to these models. Naive Bayes classifiers are called that because they make a pretty big assumption: they assume that all of the variables they're evalutating are entirely independant of each other. That 
+            is to say, they don't affect each other, and one does not tend to change with the other. You can imagine that this is often not the case. The person considering what computer to purchase likely makes more money if they're older. 
+            The peaks and troughs of an audio clip are likely to go up with each other. An insect with larger antennae may tend to have longer legs. The point is, you have to be careful where you apply a naive Bayes model, and ensure that 
+            your variables are independant. Otherwise, the model's assumptions fall flat, and its accuracy will suffer.
+        </p>
+        <h2>So, why did you choose this model to create?</h2>
+        <p>Well, it's pretty simple. I did this for a school project, and to be honest I didn't feel like implementing a <a href="https://en.wikipedia.org/wiki/Gradient_boosting#Gradient_tree_boosting" target="_blank">boosted trees</a> algorithm, 
+        or a full <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" target="_blank">convolutional neural network</a>. I probably could have, maybe I will in the future. Regardless, the algorithms behind a Bayes classifier are 
+        relatively simple, and its effectiveness on small amounts of data meant I didn't have to clog my hard drive with some 10 gigabyte dataset to showcase it. The training data I used is only 125 cases, which is staggeringly miniscule for machine
+        learning training data.
+        </p>
+        <h2>What did you apply it to?</h2>
+        <p>Wow, you keep conveniently asking the questions I want to answer, hypothetical reader! I applied it to the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set#R_code_illustrating_usage" target="_blank">Iris Dataset</a>, 
+        a famous dataset gathered by mathematician and biologist Ronald Fisher in 1936. He took 50 samples each of 3 different kinds of iris flower, measuring the length and width of their petals and sepals (small leaves that form
+        right under petals). This dataset is commonly used by beginners such as myself to test their classifier models.</p>
+        <p>The three species observed were <cite>Iris versicolor</cite>, <cite>Iris setosa</cite>, and <cite>Iris virginica</cite>, 3 closely related species pictured below.</p>
+        <figure>
+            <img src="static/bayes/versicolor.jpg" class="articleimage flower">
+            <figcaption>Iris versicolor</figcaption>
+        </figure>
+        <figure>
+            <img src="static/bayes/virginica.jpg" class="articleimage flower">
+            <figcaption>Iris virginica</figcaption>
+        </figure>
+        <figure>
+            <img src="static/bayes/setosa.jpg" class="articleimage flower" id="setosa">
+            <figcaption>Iris setosa</figcaption>
+        </figure>
+        <br><br>
+        <p>The dataset looks like this: </p>
+        <img src="static/bayes/dataset.png" class="articleimage flower">
+        <p>The first four numbers there are petal width and length, then sepal width and length (in centimeters). The last number is 1, 2, or 3, denoting setosa, versicolor, or virginica.</p>
+        <br>
+        <h2>So... how'd your model do?</h2>
+        <p>Pretty dang well! I had to go back and optimize the logic a few times, but the final version of the model classified at 92% accuracy! For a naive model trained on ~40 examples per category, that's great! Plus, its errors
+            were consistent and logical. The only mistake it ever made was incorrectly classifying versicolor as virginica, and when I took a look at the specific data it messed up on, it was an understandable error. The versicolor 
+            measurements that confused it had particularly large sepals, more similar to the typical virginica than versicolor. Maybe if I introduced color or something as an additional variable, that would give it enough information.
+            Overall, this was a pretty cool project, and my first foray into classifier models. I'd be curious to apply it to another dataset in the future to see how it does, or maybe create a different type of classifier and see if it
+            can beat 92%.
+        </p>
+        <h2>Wow... that's so cool! By the way, you're so smart and talented. And these meta jokes are funny, and not at all overdone! I personally am charmed by your medium-transcending comedy.</h2>
+        <p>Aww, thanks! But come on, you don't have to say all that.</p>
+        <h2>No, I really mean it.</h2>
+        <p>Well thank you. That's very sweet of you to say.</p>
+    </div>
+
+
+</body>
+</html>
