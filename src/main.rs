@@ -24,7 +24,6 @@ fn do_train(req_body: String) -> Result<TrainingResult, ParseFloatError>{
         .replace(')', "")
         .trim()
         .to_owned();
-    
         for line in req_body.lines() {
             let line: Vec<&str> = line.trim().split(',').collect();
             if line.len() != 2{
@@ -43,9 +42,10 @@ fn do_train(req_body: String) -> Result<TrainingResult, ParseFloatError>{
             model.add_points(&[(line0.parse()?, line1.parse()?)]);
         }
 
-        model.set_epochs(((8_388_608 as f32) / (model.graph.len() as f32)) as usize);
+        model.set_epochs(((100_388_608 as f32) / (model.graph.len() as f32)) as usize);
 
         model.train();
+
 
         Ok(model.best_result)
 }
