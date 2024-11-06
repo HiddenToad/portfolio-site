@@ -56,7 +56,8 @@
     <h2>I have a computer science background-- what did you use to make this site?</h2>
     <p>
         The server was made in Rust with <a href="https://actix.rs/" target="_blank">Actix Web</a>. Aside from simply serving the HTML, it runs the model and communicates with the client for the
-        <a href="./linear" target="_blank">Linear Regression</a> interactive page. The frontend is literally just bare HTML/CSS/JS because I <cite>hate</cite> frontend and as a result never learned any libraries.
+        <a href="./linear" target="_blank">Linear Regression</a> interactive page. The server is hosted on Google Cloud compute engine and uses <a href="https://nginx.org/en/" target="_blank">nginx</a>
+        for serving over HTTPS with <a href="https://certbot.eff.org/" target="_blank">certbot</a>. The frontend is literally just bare HTML/CSS/JS because I <cite>hate</cite> frontend and as a result never learned any libraries.
         It looks fine, and should theoretically work on different sized screens. Spent wayyyy too long making that shadow gradient in the background look right, though. Still, worth it.
     </p>
 
