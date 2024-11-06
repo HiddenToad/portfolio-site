@@ -42,18 +42,18 @@
     <h2>Okay, how do I use this model?</h2>
     <p>Great question, hypothetical reader! I created a simple user interface for the model below. To use it, you'll type some comma separated numbers (like this: 5, 10) into the text field below. Spaces and parentheses
         are totally optional and will be ignored by the program. Decimals and negatives are also allowed. Just put each pair of values on a new line, and add at least 2 pairs. The model will get significantly more accurate
-        the more pairs you add, however. Try not to do numbers over ~thirty thousand, as the size of the error during training can cause the model to error out.
+        the more pairs you add, however. Try not to do numbers over ~100 million, as the size of the error during training can cause things to go awry.
     </p>
     <p> The placeholder text has an example: here, 
         the pattern is that the right number is double the left number. Once you've added
-        your data, train the model! It'll take only a few seconds, but in that time the model will have studied your data ~100 million times and learned from it. Then, just type any number in the box below that one, and hit "Predict it!"
+        your data, train the model! It'll take only a second, but in that time the model will have studied your data ~40 million times and learned from it. Then, just type any number in the box below that one, and hit "Predict it!"
          The model will try to predict what would be on the right if that number was on the left. It'll also tell you the equation of its line of best fit. 
     </p>
 
     <br><br>
 
     <form accept-charset="utf-8" action="javascript:submit()">
-        <textarea  name="data" id="data" rows="15" cols="30" placeholder="1, 2&#10;3, 6&#10;5, 10&#10;50, 100"></textarea>
+        <textarea  name="data" id="data" rows="15" cols="30" placeholder="1, 2&#10;3, 6&#10;5, 10&#10;20, 40"></textarea>
         <input type="submit" value="Train the model!">
     </form>
 

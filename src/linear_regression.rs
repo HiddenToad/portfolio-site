@@ -10,17 +10,16 @@ pub struct TrainingResult {
     slope: f64,
 }
 
-impl Serialize for TrainingResult{
+impl Serialize for TrainingResult {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        where
-            S: serde::Serializer
+    where
+        S: serde::Serializer,
     {
         let mut s = serializer.serialize_struct("TrainingResult", 3)?;
         s.serialize_field("min_error", &self.min_error)?;
         s.serialize_field("intercept", &self.intercept)?;
         s.serialize_field("slope", &self.slope)?;
         s.end()
-        
     }
 }
 
@@ -35,11 +34,11 @@ impl TrainingResult {
     }
 }
 
-impl Default for TrainingResult{
+impl Default for TrainingResult {
     fn default() -> Self {
         Self::new()
     }
-} 
+}
 
 pub struct LinearRegressionModel {
     epochs: usize,
@@ -59,6 +58,10 @@ impl LinearRegressionModel {
         }
     }
 
+    fn point_max(point: &Point) -> f64 {
+        point.0.abs().max(point.1.abs())
+    }
+
     #[must_use]
     pub fn new_uninit() -> Self {
         LinearRegressionModel {
@@ -67,8 +70,6 @@ impl LinearRegressionModel {
             best_result: TrainingResult::new(),
         }
     }
-
-    
 
     #[must_use]
     pub fn new(input_graph: Vec<Point>) -> Self {
@@ -91,19 +92,24 @@ impl LinearRegressionModel {
 
     pub fn train(&mut self) {
         let mut tr = TrainingResult::new();
-        let learn_rate: f64 = 0.000000004;
+        let learn_rate: f64 = 0.00000004
+            / Self::point_max(
+                self.graph
+                    .iter()
+                    .max_by(|a, b| Self::point_max(a).partial_cmp(&Self::point_max(b)).unwrap())
+                    .unwrap(),
+            );
 
         for i in 0..(self.graph.len() - 1) * self.epochs {
-       
             let prediction = tr.intercept + tr.slope * self.graph[i % self.graph.len()].0;
             let error = prediction - self.graph[i % self.graph.len()].1;
             tr.intercept -= learn_rate * error;
             tr.slope -= (learn_rate * error) * self.graph[i % self.graph.len()].0;
-            if error.abs() < tr.min_error{
+            if error.abs() < tr.min_error {
                 tr.min_error = error.abs();
             }
         }
-        
+
         Self::close_enough(&mut tr.slope);
         Self::close_enough(&mut tr.intercept);
         self.best_result = tr;
