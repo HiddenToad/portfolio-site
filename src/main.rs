@@ -95,12 +95,18 @@ async fn connect4() -> impl Responder {
     HttpResponse::Ok().body(read_to_string("connect4.html").unwrap())
 }
 
+#[get("/aboutsite")]
+async fn aboutsite() -> impl Responder {
+    HttpResponse::Ok().body(read_to_string("aboutsite.html").unwrap())
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .service(index)
             .service(afs::Files::new("/static", "./static"))
+            .service(aboutsite)
             .service(dumbjoke)
             .service(raytracer)
             .service(linear)

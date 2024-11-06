@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+
+<body>
+
+    <!--navbar-->
+    <ul>
+        <li><a href="/">About Me</a></li>
+        <li><a href="#">About This Site</a></li>
+        <li class="dropdown">
+            <a class="dropbtn">Project Articles</a>
+            <div class="dropdown-content">
+                <a href="./raytracer">Raytracer</a>
+                <a href="./bayes">Naive Bayes Classifier</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="dropbtn">Interactive Projects</a>
+            <div class="dropdown-content">
+                <a href="./linear">Linear Regression Model</a>
+                <a href="./connect4"> Connect 4 Bot - Video Demo</a>
+            </div>
+        </li>
+    </ul>
+    <!--navbar-->
+<br><br>
+<h1>About This Site</h1>
+<figcaption><a target="_blank" href="https://github.com/HiddenToad/portfolio-site" style="font-size: 1.1em !important;">Github Repo Link</a></figcaption>
+<div class="articletext">
+    <h2>Why'd you make this site?</h1>
+    <p>This website serves as an online portfolio of my work. Unlike my Github, it highlights some projects I'm proud of, rather than just anything I've deemed worth saving, and it 
+        gives me a space to explain them in a way that's (hopefully) engaging and makes the work accessible to understand to non-programmers.
+    </p>
+
+    <h2>How should I use this site?</h2>
+    <p>Well, that's up to you! I've tried to be concise and effective in what I've created here. Hopefully, anyone viewing this would be able to look at everything I've added to
+        this site without too much of a time investment. I am proud of everything on here, and would love if someone read the entire site. 
+        However, if you're short on time, I would suggest you look at the Raytracer article, as I consider it to be my most technically impressive project, and my Connect 4 Bot video,
+        because you get to see some of my personality and hear my thought process.
+    </p>
+
+    <h2>I noticed there's a lot of external links- should I look at all of them?</h2>
+    <p>Yeah, there's a lot, especially on that About Me page. Generally, I insert a hyperlink for 1 of 3 reasons. The first is that a concept might be too in depth to fully explain in the article, and I 
+        want to give a curious reader the option of learning more. The second is to allow a reader to look at the specifics of something I'm talking about: if I mention a programming language,
+        I might link to its webpage to allow someone to see what it's about. The third is to add a dumb joke. I think if you clicked on every link in this site and explored it in depth, you'd triple
+        the time it took to view the whole site. So, I'd say click on something if you're curious about it. Maybe you'll find <a href="./dumbjoke" target="_blank">a dumb joke</a>.
+    </p>
+    
+    <h2>I have a computer science background-- what did you use to make this site?</h2>
+    <p>
+        The server was made in Rust with <a href="https://actix.rs/" target="_blank">Actix Web</a>. Aside from simply serving the HTML, it runs the model and communicates with the client for the
+        <a href="./linear" target="_blank">Linear Regression</a> interactive page. The frontend is literally just bare HTML/CSS/JS because I <cite>hate</cite> frontend and as a result never learned any libraries.
+        It looks fine, and should theoretically work on different sized screens. Spent wayyyy too long making that shadow gradient in the background look right, though. Still, worth it.
+    </p>
+
+</div>
+
+
+</body>
+</html>
