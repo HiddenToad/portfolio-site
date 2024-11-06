@@ -85,9 +85,14 @@ async fn linear() -> impl Responder {
     HttpResponse::Ok().body(read_to_string("linear.html").unwrap())
 }
 
-#[get("bayes")]
+#[get("/bayes")]
 async fn bayes() -> impl Responder {
     HttpResponse::Ok().body(read_to_string("bayes.html").unwrap())
+}
+
+#[get("/connect4")]
+async fn connect4() -> impl Responder {
+    HttpResponse::Ok().body(read_to_string("connect4.html").unwrap())
 }
 
 #[actix_web::main]
@@ -101,6 +106,7 @@ async fn main() -> std::io::Result<()> {
             .service(linear)
             .service(train)
             .service(bayes)
+            .service(connect4)
     })
     .bind(("0.0.0.0", 8080))?
     .run()
