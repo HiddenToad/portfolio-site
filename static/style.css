@@ -88,18 +88,18 @@ h2{
 }
 
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1000px) {
 
     .sidebyside{
         display: block !important;
         align-items: center;
     }
     .sidebyside figure img{
-        width: 100vw !important;
+        width: 95vw !important;
         display: block !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        margin-bottom: -25vw !important;
+        margin-bottom: -20vw !important;
         margin-top: -15vw;
         align-self: center !important;
     }
@@ -223,8 +223,8 @@ input[type="text"]{
 }
 .sidebyside figure img{
     width: 36vw;
-    margin-right: -11vw;
-    margin-left: -11vw;
+    margin-right: -12vw;
+    margin-left: -12vw;
     margin-bottom: -8.5vw;
     clip-path: rect(25% 75% 75% 25%);
 }
