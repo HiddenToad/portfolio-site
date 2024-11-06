@@ -100,12 +100,17 @@ async fn aboutsite() -> impl Responder {
     HttpResponse::Ok().body(read_to_string("aboutsite.html").unwrap())
 }
 
+#[get("/favicon.ico")]
+async fn favicon() -> actix_web::Result<afs::NamedFile>{
+    Ok(afs::NamedFile::open("static/favicon.ico")?)
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .service(index)
-            .service(afs::Files::new("/static", "./static"))
+            .service(afs::Files::new("static", "./static"))
             .service(aboutsite)
             .service(dumbjoke)
             .service(raytracer)
@@ -113,6 +118,7 @@ async fn main() -> std::io::Result<()> {
             .service(train)
             .service(bayes)
             .service(connect4)
+	    .service(favicon)
     })
     .bind(("0.0.0.0", 80))?
     .run()

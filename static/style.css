@@ -171,13 +171,26 @@ li a,
     text-decoration: none;
 }
 
-li a:hover,
-.dropdown:hover .dropbtn {
-    background-color: #030d21;
+@media (hover: hover){
+
+    li a:hover,
+    .dropdown:hover .dropbtn {
+        background-color: #030d21;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+@media (hover: none){
+    li a:active,
+    .dropdown:active .dropbtn{
+         background-color: #030d21;
+    }
+    .dropdown:active .dropdown-content{
+        display: block;
+    }
 }
 
 .dropdown-content {
